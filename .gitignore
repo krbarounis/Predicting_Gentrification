@@ -9,6 +9,12 @@ __pycache__/
 #CSV
 *.csv
 
+#venv
+venv
+*.pyc
+.DS_store
+.env
+
 # Distribution / packaging
 .Python
 build/
