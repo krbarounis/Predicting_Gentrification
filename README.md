@@ -1,10 +1,24 @@
 # Predicting_Gentrification
 
-This project explore demographic, socioeconomic, and racial trends in the Boston area using 2000 and 2010 census data and ultimately predicts which census tracts will be considered gentrifying by the 2020 census using a classification model.
+This project explores demographic, socioeconomic, and racial trends in the Boston area using 2000 and 2010 census data and ultimately predicts which census tracts will be considered gentrifying by the 2020 census using a classification model.
+
+I'm originally from the Boston area, so I was naturally interested in exploring this data and testing my knowledge of the city! I also was inspired to undertake this project in order to build a model that could hypothetically be used by policy makers and politicians so that they could help minority groups that would be likely be displaced as a result of gentrification.
 
 I've created a dashboard that highlights some of the major trends I discovered during the EDA process as well as the gentrified neighborhoods (as of 2010) discovered through the use of a clustering algorithm. Take a look! https://kristinab-dash-app.herokuapp.com/ (please be patient, loading the site takes a few moments).
 
-Once the 2020 census is released, I'll be able to compare my predictions to the data and determine the accuracy of my model.
+Once the 2020 census is released, I'll be able to compare my predictions to the data and determine the accuracy of my model!
+
+- [Tech Stack](#tech-stack)
+
+- [Data](#data)
+  - [EDA](#eda)
+
+- [Clustering](#clustering)
+
+- [Classifying](#classifying) 
+  - [Implementing SMOTE](#implementing-smote)
+
+- [Sources](#sources)
 
 ## Tech Stack
 - Python
@@ -15,15 +29,13 @@ Once the 2020 census is released, I'll be able to compare my predictions to the 
   - Dash
 - Heroku
 
-## Intro
-
-I'm originally from the Boston area, so I was naturally interested in exploring this data and testing my knowledge of the city. I also was inspired to undertake this project in order to build a model that could hypothetically be used by policy makers and politicians so that they could help minority groups that would be likely be displaced as a result of gentrification.
-
 ## Data
 
 Census tracts are not fixed over time. Boundaries are very often redrawn by politicians, which complicates looking at census data over time. As a result, I got my data from the Longitudinal Tract Data Base (http://www.s4.brown.edu/us2010/Researcher/Bridging.htm), a resource which provides census data estimates within 2010 tract boundaries for prior censuses (going back to 1970). To read about the interpolation method used by the team, click here: https://s4.ad.brown.edu/Projects/Diversity/Researcher/Logan%20etal_2014_PG.pdf.
 
-After getting access to the database, I filtered for Suffolk County, MA and cleaned out some of the census tracts that had populations of less than 500 people, as a lot of the fields were empty for those tracts. My final dataset had 191 census tracts and over 50 features, including racial, ethnic, income, housing, employment, and education information.
+After getting access to the database, I filtered for Suffolk County, MA and cleaned out some of the census tracts that had populations of less than 500 people, as a lot of the fields were empty for those tracts. My final dataset had 190 census tracts and over 50 features, including racial, ethnic, income, housing, employment, and education information.
+
+### EDA
 
 ## Clustering
 
@@ -35,10 +47,19 @@ Rather than strictly defining thresholds for what constitutes gentrification, I 
 - Non-White population
 - Owner-occupied housing
 
-Based on my domain knowledge of Boston, I decided to use the outputs from k-means clustering with k=3. In order to provide meaning/context for the groups, I compared the mean value for the county as a whole to the mean value for each cluster across the 6 variables mentioned above. I then created my own labels for those clusters based on this comparison:
-- Gentrifying (n=31):
-- Becoming more affordable(n=71):
-- Remaining costly (n=82):
+Based on my domain knowledge of Boston, as well as the results from the below two graphs, I decided to use the outputs from k-means clustering with k=4. 
+
+![](/Images/Elbow_curve.png)
+The elbow curve shows the total within-cluster sum of squares (WSS) for every value of k. The WSS represents the intra-cluster variation, which is a value that should be minimized when clustering.
+
+![](/Images/Silhouette.png)
+
+In order to provide meaning/context for the groups, I compared the mean value for the county as a whole to the mean value for each cluster across the 6 variables mentioned above. I then created my own labels for those clusters based on this comparison:
+- Gentrifying (n=31): these are census tracts which saw larger increases in 5/6 variables when compared to the baseline (county average)
+- Becoming more affordable(n=77): these are census tracts which saw either smaller increases, or declines in 5/6 variables when compared to the baseline
+- Remaining costly (n=82): these are census tracts which saw changes that were in line with those of the baseline for all variables
+
+![](/Images/Cluster_radar_plot.png)
 
 ## Classifying
 
@@ -49,7 +70,8 @@ I started by running a Dummy Classifier on my data to create a baseline accuracy
 
 ### Final model: Random Forest
 
-### Implement SMOTE:
+### Implementing SMOTE:
+Given the class imbalance in my dataset, my model naturally performs worse when predicting the smallest class, which in this case is the gentrifying group. To address this, I implemented SMOTE (synthetic minority over-sampling technique).
 
 ## Sources
 http://www.s4.brown.edu/us2010/Researcher/Bridging.htm <br>
