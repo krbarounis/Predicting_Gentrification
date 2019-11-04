@@ -41,7 +41,7 @@ The total population in my data set increased 4.5%, from approximately 690k to 7
 
 ![](/Images/Race_pop_2000.png)
 ![](/Images/Race_pop_changes.png)
-The figure on the left shows the distribution of population by race across census tracts in 2000 while the figure on the right shows the distribution of population *changes from 2000-2010* by race across census tracts. What this shows is that on average, census tracts in 2000 were mostly made up of Non-Hispanic White people, followed by Hispanic, Black, and Asian. However, between 2000 and 2010, growth in the population of these groups was led by Hispanics, followed by Asians and Blacks, while the White population actually declined on average.
+The first figure shows the distribution of population by race across census tracts in 2000 while the second figure shows the distribution of population *changes from 2000-2010* by race across census tracts. What this shows is that on average, census tracts in 2000 were mostly made up of Non-Hispanic White people, followed by Hispanic, Black, and Asian. However, between 2000 and 2010, growth in the population of these groups was led by Hispanics, followed by Asians and Blacks, while the White population actually declined on average. Boston became more racially diverse over those 10 years.
 
 ## Clustering
 
