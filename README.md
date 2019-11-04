@@ -15,8 +15,7 @@ Once the 2020 census is released, I'll be able to compare my predictions to the 
 
 - [Clustering](#clustering)
 
-- [Classifying](#classifying) 
-  - [Implementing SMOTE](#implementing-smote)
+- [Modeling](#modeling) 
 
 - [Sources](#sources)
 
@@ -37,6 +36,12 @@ After getting access to the database, I filtered for Suffolk County, MA and remo
 
 ### EDA
 
+Much of this information is included on my Dash app (link above), but for completeness sake, here are some things I discovered about Boston through EDA:
+
+1. Boston became more racially diverse
+2. Affordability declined
+3. Income inequality increased
+
 ## Clustering
 
 Rather than strictly defining thresholds for what constitutes gentrification, I relied on unsupervised algorithms (k-means and agglomerative heirarchical clustering) to group census tracts based on 6 traditional indicators of gentrification (in terms of percent change between the 2000 and 2010 census):
@@ -56,19 +61,18 @@ The elbow curve shows the total within-cluster sum of squares (WSS) for every va
 
 In order to provide meaning/context for the clusters, I compared the mean value for the county to the mean value for each cluster across the 6 variables mentioned above. I then created my own labels for those clusters based on this comparison:
 - **Gentrifying**: these are census tracts which saw larger increases in 5/6 variables when compared to the baseline (county average), with the one exception being percent change in non-White population, for which a decline is typically associated with gentrification.  
-- **Becoming more affordable**: these are census tracts which saw either smaller increases, or overall declines in 5/6 variables when compared to the baseline
-- **Remaining costly**: these are census tracts which saw changes that were in line with those of the baseline for all variables. I thought "remaining costly" was fitting given that, on average, Boston experienced large increases in housing prices, with smaller increases in income, resulting in increasingly unaffordable neighborhoods.
+- **Becoming more affordable**: these are census tracts which saw either smaller increases, or overall declines in 5/6 variables when compared to the baseline paired with a higher than average increase in the non-White population
+- **Becoming more costly**: these are census tracts which saw changes that were in line with those of the baseline for all variables. I thought "Becoming more costly" was fitting given that, on average, Boston experienced large increases in housing prices, with smaller increases in income, resulting in increasingly unaffordable neighborhoods. This census tract matched the average well.
 
 ![](/Images/Cluster_radar_plot.png)
 
 ## Classifying
+After assigning labels to the clusters, I built a classification model, where the target variable is the cluster/label and the feature space is the data from the 2000 census, i.e. the "starting point" of a census tract. This step in the project helped answer the question: how necessary is it to know exactly how variables are changing over time to identify gentrification? Can we foresee gentrification simply based on point in time data?
 
-After assigning labels to the clusters, I built a classification model, where the target variable is the cluster/label and the feature space is the data from the 2000 census, i.e. the "starting point" of a census tract. This step in the project helped answer the question of, how necessary is it to know exactly how variables are changing over time to predict gentrification? Can we foresee gentrification simply based on point in time data?
-
-### Baseline model: Dummy Classifier
+### Modeling
 I started by running a Dummy Classifier on my data to create a baseline accuracy score. This model defaults to predictnig the most frequent class for every observation, and therefore acheieved an accuracy score of 43% on the training set and 42% on the testing set.
 
-### Final model: Random Forest
+The Random Forest model resulted in an accuracy score 75% and 59% on the training and testing set, respectively, using the following parameters.
 
 ### Implementing SMOTE:
 Given the class imbalance in my dataset, my model naturally performs worse when predicting the smallest class, which in this case is the gentrifying group. To address this, I implemented SMOTE (synthetic minority over-sampling technique).
