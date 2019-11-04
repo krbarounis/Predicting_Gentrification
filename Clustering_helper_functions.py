@@ -6,12 +6,13 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import silhouette_score
 from sklearn.manifold import TSNE
 
-# Pipline for implementing K-means clustering.
+# These 4 functions serve as a pipline for implementing K-means clustering.
+
 def scale_df(df):
     """
     scale_df(df):
-    This function uses sklearn's min-max scaler to return a scaled dataframe.
-
+    This function uses sklearn's min-max scaler to return a scaled dataframe where each feature is individually scaled to have a
+    range of values between 0 and 1.
     Params:
         df: unscaled dataframe
     Returns:
@@ -28,46 +29,49 @@ def scale_df(df):
 def check_k_means(df_scaled):
     """
     check_k_means(df_scaled):
-    This function
-    
+    This function returns 2 plots which assist in determing the optimal number of clusters to use in k-means clustering 
+    for a specific dataset:
+        1. Elbow Plot
+        2. Silhouette Curve
     Params:
+        df_scaled: dataframe of scaled data
     Returns:
+    The first plot returned is the Elbow Plot, which shows the WSS (within-cluster sum of square errors) for different values of
+    k. The idea is to select the k for which the WSS first starts to diminish. In the plot of WSS-versus-k, this is visible as an
+    elbow.," i.e. the pointwhere increasing the number of clusters no longer materially decreases the WSS.
     
+    The second plot returned is the Silhouette Curve, which shows the average silhouette score (a measure of how close each point 
+    in one cluster is to points in the neighboring clusters) for different values of k. The idea is to select the k for there is 
+    a global maxima in the curve. 
     """
-    # check elbow
-    # Calculate the Within-Cluster-Sum of Squared Errors (WSS) for different values of k, 
-    # and choose the k for which WSS first starts to diminish. In the plot of WSS-versus-k, 
-    # this is visible as an elbow.
-    # Specifying the dataset and initializing variables
-
+    # Specify the dataset and initialize variables
     X = df_scaled
     distorsions = []
 
     # Calculate SSE for different K
-
     for k in range(2, 10):
         kmeans = KMeans(n_clusters=k, random_state = 301)
         kmeans.fit(X)
         distorsions.append(kmeans.inertia_)
 
     # Plot values of SSE
-    plt.figure(figsize=(15,8))
+    plt.figure(figsize=(15,8),dpi=250)
     plt.subplot(121, title='Elbow curve')
     plt.xlabel('k')
     plt.ylabel('WSS')
     plt.plot(range(2, 10), distorsions)
     plt.grid(True)
 
-    # check sillhouette
-
+    # check silhouette
     silhouette_plot = []
+    # Calculate silhouette coefficient for different K
     for k in range(2, 10):
         clusters = KMeans(n_clusters=k, random_state=10)
         cluster_labels = clusters.fit_predict(X)
         silhouette_avg = silhouette_score(X, cluster_labels)
         silhouette_plot.append(silhouette_avg)
     # Plot Silhouette coefficient
-    plt.figure(figsize=(15,8))
+    plt.figure(figsize=(15,8), dpi=250)
     plt.subplot(121, title='Silhouette coefficients over k')
     plt.xlabel('k')
     plt.ylabel('silhouette coefficient')
@@ -78,30 +82,29 @@ def check_k_means(df_scaled):
 def fit_k_means(n_clusters,scaled_df):
     """
     fit_k_means(n_clusters,scaled_df):
+    This function fits data to Sklearn's k-means algorithm and returns the model.
     Params:
-        n_clusters:
-        scaled_df:
+        n_clusters: number of clusters to divide the data into
+        scaled_df: the scaled data that is to be fit to the algorithm
     Returns:
-    
+        A fitted k-means model.
     """
     model = KMeans(n_clusters=n_clusters).fit(scaled_df)
     return model
 
 def create_cluster_df(model,scaled_df):
-    cluster_map = pd.DataFrame()
-    cluster_map['tractid']=scaled_df.index.values
-    cluster_map['cluster']=model.labels_
-    return cluster_map
+    """create_cluster_df(model,scaled_df)
+    This function takes in a fitted k-means model and a scaled dataframe and returns a dataframe of clusters and tract IDs to 
+    visualize which tracts were grouped into each cluster.
+    Params:
+        model: fitted k-means model
+        scaled_df: scaled data that was fit to the algorithm
+    Returns:
+        A dataframe of clusters and IDs.
+    """
+    cluster_df = pd.DataFrame()
+    cluster_df['tractid']=scaled_df.index.values
+    cluster_df['cluster']=model.labels_
+    return cluster_df
 
-def plot_clusters_tsne(df_scaled,df_cluster):
-    
-    tsne_results=TSNE(n_components=2,verbose=1,perplexity=40, n_iter=300).fit_transform(df_scaled.values)
-    
-    df_subset=pd.DataFrame()
-    df_subset['tsne-2d-one']=tsne_results[:,0]
-    df_subset['tsne-2d-two']=tsne_results[:,1]
-    df_toplot = df_subset.merge(df_cluster,how='outer',left_index=True,right_index=True)
-    
-    plt.figure(figsize=(15,8))
-    plt.scatter(x='tsne-2d-one',y='tsne-2d-two',hue='cluster',data=df_toplot)
     
