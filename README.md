@@ -55,9 +55,7 @@ Rather than strictly defining thresholds for what constitutes gentrification, I 
 Based on my domain knowledge of Boston, as well as the results from the below two graphs, I decided to use the outputs from k-means clustering with k=4. 
 
 ![](/Images/Elbow_curve.png)
-The elbow curve shows the total within-cluster sum of squares (WSS) for every value of k. The WSS represents the intra-cluster variation, which is a value that should be minimized when clustering. Ideally, the elbow, the point where adding another cluster doesn't materially decrease the WSS, would be obvious, but in this case you could argue k=4 or k=6 makes sense.
-
-![](/Images/Silhouette.png)
+The elbow curve shows the total within-cluster sum of squares (WSS) for every value of k. The WSS represents the intra-cluster variation, which is a value that should be minimized when clustering. Ideally, the elbow, or the point where adding another cluster doesn't materially decrease the WSS, would be obvious, but in this case you could argue k=4, k=6, or even k=7 make sense.
 
 In order to provide meaning/context for the clusters, I compared the mean value for the county to the mean value for each cluster across the 6 variables mentioned above. I then created my own labels for those clusters based on this comparison:
 - **Gentrifying**: these are census tracts which saw larger increases in 5/6 variables when compared to the baseline (county average), with the one exception being percent change in non-White population, for which a decline is typically associated with gentrification.  
