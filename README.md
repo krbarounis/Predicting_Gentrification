@@ -36,11 +36,12 @@ After getting access to the database, I filtered for Suffolk County, MA and remo
 
 ### EDA
 
-Much of this information is included on my Dash app (link above), but for completeness sake, here are some things I discovered about Boston through EDA:
+![](/Images/Population_change_dist.png)
+The total population in my data set increased 4.5%, from approximately 690k to 722k. Census tracts were relatively evenly split between population growth and declines, with 58% of census tracts having experienced population growth and the remaining 42% seeing declines.
 
-1. Boston became more racially diverse
-2. Affordability declined
-3. Income inequality increased
+![](/Images/Race_pop_2000.png)
+![](/Images/Race_pop_changes.png)
+The figure on the left shows the distribution of population by race across census tracts in 2000 while the figure on the right shows the distribution of population *changes from 2000-2010* by race across census tracts. What this shows is that on average, census tracts in 2000 were mostly made up of Non-Hispanic White people, followed by Hispanic, Black, and Asian. However, between 2000 and 2010, growth in the population of these groups was led by Hispanics, followed by Asians and Blacks, while the White population actually declined on average.
 
 ## Clustering
 
