@@ -58,10 +58,10 @@ Based on my domain knowledge of Boston, as well as the results from the below tw
 ![](/Images/Elbow_curve.png)
 The elbow curve shows the total within-cluster sum of squares (WSS) for every value of k. The WSS represents the intra-cluster variation, which is a value that should be minimized when clustering. Ideally, the elbow, or the point where adding another cluster doesn't materially decrease the WSS, would be obvious, but in this case you could argue k=4, k=6, or even k=7 make sense.
 
-In order to provide meaning/context for the clusters, I compared the mean value for the county to the mean value for each cluster across the 6 variables mentioned above. I then created my own labels for those clusters based on this comparison:
-- **Gentrifying**: these are census tracts which saw larger increases in 5/6 variables when compared to the baseline (county average), with the one exception being percent change in non-White population, for which a decline is typically associated with gentrification.  
-- **Becoming more affordable**: these are census tracts which saw either smaller increases, or overall declines in 5/6 variables when compared to the baseline paired with a higher than average increase in the non-White population
-- **Becoming more costly**: these are census tracts which saw changes that were in line with those of the baseline for all variables. I thought "Becoming more costly" was fitting given that, on average, Boston experienced large increases in housing prices, with smaller increases in income, resulting in increasingly unaffordable neighborhoods. This census tract matched the average well.
+In order to provide meaning/context for the clusters, I compared the county average to each cluster's average across the 6 variables mentioned above. I then created my own labels for those clusters based on this comparison:
+- **Gentrifying**: these are census tracts which saw larger increases in 5/6 variables when compared to the baseline (county average), with the one exception being percent change in Non-White population, for which a decline is typically associated with gentrification.  
+- **Lagging behind**: these are census tracts which saw either smaller increases, or overall declines, in measures of income, housing values, and education levels when compared to the baseline. Neighborhoods in this cluster also experienced larger than average increases in the Non-White population.
+- **Representing the average**: these are census tracts which saw changes that were generally in line with those of the baseline across all variables. 
 
 ![](/Images/Cluster_radar_plot.png)
 
