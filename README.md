@@ -68,10 +68,10 @@ I started by running a Dummy Classifier on my data as a baseline. This model def
 
 After parameter tuning with grid search, the following are the training and testing accuracy scores for all the models that were tested. Random Forest achieved the highest accuracy scores amongst the models, but is relatively overfit to the training data, especially compared to KNN. Given a long-term goal of using this model for other major metropolitan areas, I wanted to ensure my model would generalize well to unseen data. KNN may be a better model for this purpose, but ultimately if I want an accurate model for the Boston area, I'd choose Random Forest.
 
-| Accuracy  | Dummy  | KNN | Decision Tree | Random Forest | XGBoost |
+| Model | Dummy  | KNN | Decision Tree | Random Forest | XGBoost |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
-| Training | 33% | 69% | 91% | 92% | 94% |
-| Testing | 16% | 46% | 52% | 57% | 47% |
+| Training Accuracy| 33% | 69% | 91% | 92% | 94% |
+| Testing Accuracy | 16% | 46% | 52% | 57% | 47% |
 
 ## Sources
 http://www.s4.brown.edu/us2010/Researcher/Bridging.htm <br>
