@@ -1,17 +1,14 @@
 # Predicting_Gentrification
 
-This project explores demographic, socioeconomic, and racial trends in the Boston area using 2000 and 2010 census data and ultimately predicts which census tracts will be considered gentrifying by the 2020 census using a classification model.
+This project explores demographic, socioeconomic, and racial trends in the Boston area using 2000 and 2010 census data.
 
 I'm originally from the Boston area, so I was naturally interested in exploring this data and testing my knowledge of the city! I was also inspired to undertake this project in order to build a model that could hypothetically be used by policy makers and politicians so that they could help minority groups that would be likely be displaced as a result of gentrification.
 
 I've created a dashboard that highlights some of the major trends I discovered during the EDA process as well as a depitction of the gentrified neighborhoods (as of 2010) discovered through the use of a clustering algorithm. Take a look! https://kristinab-dash-app.herokuapp.com/ (please be patient, loading the site takes a few moments).
 
-Once the 2020 census is released, I'll be able to compare my predictions to the data and determine the accuracy of my model!
-
 - [Tech Stack](#tech-stack)
 
 - [Data](#data)
-  - [EDA](#eda)
 
 - [Clustering](#clustering)
 
