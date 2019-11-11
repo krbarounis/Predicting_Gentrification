@@ -3,7 +3,8 @@ import itertools
 import numpy as np
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import StratifiedKFold
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import precision_score, recall_score, accuracy_score, f1_score
+
 
 def plot_confusion_matrix(cm, classes,
                           normalize=False,
@@ -36,6 +37,12 @@ def plot_confusion_matrix(cm, classes,
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
 
+def print_metrics(labels, preds):
+    print("Precision Score: {}".format(precision_score(labels, preds, average='micro')))
+    print("Recall Score: {}".format(recall_score(labels, preds,average='micro')))
+    print("Accuracy Score: {}".format(accuracy_score(labels, preds)))
+    print("F1 Score: {}".format(f1_score(labels, preds,average='micro')))
+    
 def plot_AUC_ROC(y_score,fpr,tpr):
     sns.set_style("darkgrid", {"axes.facecolor": ".9"})
     print('AUC: {}'.format(auc(fpr, tpr)))

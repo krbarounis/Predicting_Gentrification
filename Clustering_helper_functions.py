@@ -55,7 +55,7 @@ def check_k_means(df_scaled):
         distorsions.append(kmeans.inertia_)
 
     # Plot values of SSE
-    plt.figure(figsize=(15,8),dpi=250)
+    plt.figure(figsize=(15,8),dpi=75)
     plt.subplot(121, title='Elbow curve')
     plt.xlabel('k')
     plt.ylabel('WSS')
@@ -71,7 +71,7 @@ def check_k_means(df_scaled):
         silhouette_avg = silhouette_score(X, cluster_labels)
         silhouette_plot.append(silhouette_avg)
     # Plot Silhouette coefficient
-    plt.figure(figsize=(15,8), dpi=250)
+    plt.figure(figsize=(15,8), dpi=75)
     plt.subplot(121, title='Silhouette coefficients over k')
     plt.xlabel('k')
     plt.ylabel('silhouette coefficient')
@@ -92,6 +92,46 @@ def fit_k_means(n_clusters,scaled_df):
     model = KMeans(n_clusters=n_clusters).fit(scaled_df)
     return model
 
+def best_centroids(sample_size, random_state, n_clusters, n_iterations, n_attempts):
+    """
+    best_centroids()
+    Params:
+        sample_size:
+        random_state:
+        n_clusters:
+        n_iterations:
+        n_attempts:
+    Returns:
+    
+    """
+    # create sample of dataframe
+    data_sample = df_subset_scaled.sample(frac=sample_size, random_state=random_state, replace=False)
+    
+    final_cents = []
+    final_inert = []
+
+# each iteration randomly initializes k centroids and performs n interations of k-means
+    for sample in range(n_attempts):
+        print('\nCentroid attempt: ', sample)
+        km = KMeans(n_clusters=n_clusters, init='random', max_iter=1, n_init=1)
+        km.fit(data_sample)
+        inertia_start = km.inertia_
+        intertia_end = 0
+        cents = km.cluster_centers_
+
+        for iter in range(NUM_ITER):
+            km = KMeans(n_clusters=NUM_CLUSTERS, init=cents, max_iter=1, n_init=1)
+            km.fit(data_sample)
+            print('Iteration: ', iter)
+            print('Inertia:', km.inertia_)
+            print('Centroids:', km.cluster_centers_)
+            inertia_end = km.inertia_
+            cents = km.cluster_centers_
+
+        final_cents.append(cents)
+        final_inert.append(inertia_end)
+        print('Difference between initial and final inertia: ', inertia_start-inertia_end)
+        
 def create_cluster_df(model,scaled_df):
     """create_cluster_df(model,scaled_df)
     This function takes in a fitted k-means model and a scaled dataframe and returns a dataframe of clusters and tract IDs to 
