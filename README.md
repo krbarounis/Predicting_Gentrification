@@ -53,10 +53,12 @@ Rather than strictly defining thresholds for what constitutes gentrification, I 
 - Non-White population
 - Owner-occupied housing
 
-Based on my domain knowledge of Boston, as well as the results from the below two graphs, I decided to use the outputs from k-means clustering with k=4. 
+Based on my domain knowledge of Boston, in conjunction with the results of the below two graphs, I decided to apply k=4 to the k-means clustering algorithm. 
 
 ![](/Images/Elbow_curve.png)
 The elbow curve shows the total within-cluster sum of squares (WSS) for every value of k. The WSS represents the intra-cluster variation, which is a value that should be minimized when clustering. Ideally, the elbow, or the point where adding another cluster doesn't materially decrease the WSS, would be obvious, but in this case you could argue k=4, k=6, or even k=7 make sense.
+
+One downfall of k-means clustering is that the clusters are very sensitive to the starting point of the centroids. In order to address this, I used an iterative approach to finding an optimal starting point for the centroids. After applying this to my data, the algorithm sorted 190 tracts into clusters 1-3, and only 1 tract into cluster 4. As a result, at this point in my analysis, I focused on clusters 1-3 to generalize my data, deciding that group 4 was an anomaly.
 
 In order to provide meaning/context for the clusters, I compared the county average to each cluster's average across the 6 variables mentioned above. I then created my own labels for those clusters based on this comparison:
 - **Gentrifying**: these are census tracts which saw larger increases in 5/6 variables when compared to the baseline (county average), with the one exception being percent change in Non-White population, for which a decline is typically associated with gentrification.  
