@@ -55,7 +55,7 @@ def check_k_means(df_scaled):
         distorsions.append(kmeans.inertia_)
 
     # Plot values of SSE
-    plt.figure(figsize=(15,8),dpi=75)
+    plt.figure(figsize=(15,8),dpi=100)
     plt.subplot(121, title='Elbow curve')
     plt.xlabel('k')
     plt.ylabel('WSS')
@@ -71,7 +71,7 @@ def check_k_means(df_scaled):
         silhouette_avg = silhouette_score(X, cluster_labels)
         silhouette_plot.append(silhouette_avg)
     # Plot Silhouette coefficient
-    plt.figure(figsize=(15,8), dpi=75)
+    plt.figure(figsize=(15,8), dpi=100)
     plt.subplot(121, title='Silhouette coefficients over k')
     plt.xlabel('k')
     plt.ylabel('silhouette coefficient')
