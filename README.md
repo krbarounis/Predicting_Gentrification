@@ -41,9 +41,9 @@ Rather than strictly defining thresholds for what constitutes gentrification, I 
 - Non-White population
 - Owner-occupied housing
 
-Based on my domain knowledge of Boston, in conjunction with the results of the below two graphs, I decided to apply k=4 to the k-means clustering algorithm. 
+Based on both the elbow curve and silhouette curve, in conjunction with my domain knowledge of Boston, I decided to apply k=4 to the k-means clustering algorithm. 
 
-![](/Images/Elbow_curve.png)
+![](/Images/Elbow_curve.png) ![](/Images/Silhouette.png) 
 
 The elbow curve shows the total within-cluster sum of squares (WSS) for every value of k. The WSS represents the intra-cluster variation, which is a value that should be minimized when clustering. Ideally, the elbow, or the point where adding another cluster doesn't materially decrease the WSS, would be obvious, but in this case you could argue k=4, k=6, or even k=7 make sense.
 
