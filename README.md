@@ -48,7 +48,7 @@ Based on both the elbow curve and silhouette curve, in conjunction with my domai
 
 The elbow curve shows the total within-cluster sum of squares (WSS) for every value of k. The WSS represents the intra-cluster variation, which is a value that should be minimized when clustering. Ideally, the elbow, or the point where adding another cluster doesn't materially decrease the WSS, would be obvious, but in this case you could argue k=4, k=6, or even k=7 make sense.
 
-One downfall of k-means clustering is that the clusters are very sensitive to the starting point of the centroids. In order to address this, I used an iterative approach to finding an optimal starting point for the centroids. After applying this to my data, the algorithm sorted 190 tracts into clusters 1-3, and only 1 tract into cluster 4. As a result, at this point in my analysis, I focused on clusters 1-3 to generalize my data, deciding that group 4 was an anomaly.
+One downfall of k-means clustering is that the clusters are very sensitive to the starting point of the centroids. In order to address this, I used an iterative approach to finding a more optimal starting point for the centroids. After applying this to my data, the algorithm sorted 190 tracts into clusters 1-3, and only 1 tract into cluster 4. As a result, at this point in my analysis, I focused on clusters 1-3 to generalize my data, deciding that group 4 was an anomaly.
 
 In order to interpret the clusters, I looked at the summary statistics of the features across the different groups, and relative to the county as a whole. More specifically, I compared the county average for each variable to the cluster average for each variable and then created my own labels for those clusters based on how those values differed:
 - **Gentrifying**: these are census tracts which saw larger increases in 5/6 variables when compared to the baseline (county average), with the one exception being percent change in Non-White population, for which a decline is typically associated with gentrification.  
@@ -70,7 +70,7 @@ I started by running a Dummy Classifier on my data as a baseline. This model def
 
 After parameter tuning with grid search, the following are the training and testing accuracy scores for all the models that were tested. Random Forest achieved the highest accuracy scores amongst the models, but is relatively overfit to the training data, especially compared to KNN. Given a long-term goal of using this model for other major metropolitan areas, I wanted to ensure my model would generalize well to unseen data. KNN may be a better model for this purpose, but ultimately if I want an accurate model for the Boston area, I'd choose Random Forest.
 
-| Model | Dummy  | KNN | Decision Tree | Random Forest | XGBoost |
+| | Dummy  | KNN | Decision Tree | Random Forest | XGBoost |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
 | Training Accuracy| 33% | 69% | 91% | 92% | 94% |
 | Testing Accuracy | 16% | 46% | 52% | 57% | 47% |
