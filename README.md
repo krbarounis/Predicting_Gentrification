@@ -72,6 +72,10 @@ After parameter tuning with grid search, the following are the training and test
 | Training Accuracy| 33% | 69% | 91% | 92% | 94% |
 | Testing Accuracy | 16% | 46% | 52% | 57% | 47% |
 
+Out of the 40 features from the 2000 census, the 10 most important features in the Random Forest model are shown in the bar graph below, although it is evident that no one feature really stands out as the *most* important. The top feature, by a small margin, is the percentage of homes in the census tract that are vacant, followed by the percentage of homes occupied by owners (rather than renters). Notably, 4 out of top 10 relate to the racial/ethnic breakdown of the population.
+
+![](/Images/rf_feature_importance.png)
+
 ## Sources
 http://www.s4.brown.edu/us2010/Researcher/Bridging.htm <br>
 Logan, John R., Zengwang Xu, and Brian Stults. 2014. "Interpolating US Decennial Census Tract Data from as Early as 1970 to 2010: A Longitudinal Tract Database" The Professional Geographer 66(3): 412–420.
