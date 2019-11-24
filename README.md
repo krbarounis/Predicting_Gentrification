@@ -4,7 +4,7 @@ This project explores demographic, socioeconomic, and racial trends in the Bosto
 
 I'm originally from the Boston area, so I was naturally interested in exploring this data and testing my knowledge of the city! I was also inspired to undertake this project in order to build a model that could hypothetically be used by policy makers and politicians so that they could help minority groups that would be likely be displaced as a result of gentrification.
 
-I've created a dashboard that highlights some of the major trends I discovered during the EDA process as well as a depitction of the gentrified neighborhoods (as of 2010) discovered through the use of a clustering algorithm. Take a look! https://kristinab-dash-app.herokuapp.com/ (please be patient, loading the site takes a few moments).
+I've created a dashboard that highlights some of the major trends I discovered during the EDA process as well as a depiction of the gentrified neighborhoods (as of 2010) discovered through the use of a clustering algorithm. Take a look! https://kristinab-dash-app.herokuapp.com/ (please be patient, loading the site takes a few moments).
 
 - [Tech Stack](#tech-stack)
 
@@ -27,9 +27,9 @@ I've created a dashboard that highlights some of the major trends I discovered d
 
 ## Data
 
-Census tracts are not fixed over time. Boundaries are very often redrawn by politicians, which complicates looking at census data over time. As a result, I got my data from the Longitudinal Tract Data Base (http://www.s4.brown.edu/us2010/Researcher/Bridging.htm), a resource which provides census data estimates within 2010 tract boundaries for prior censuses (going back to 1970). To read about the interpolation method used by the team, click here: https://s4.ad.brown.edu/Projects/Diversity/Researcher/Logan%20etal_2014_PG.pdf.
+Census tracts are not fixed over time. Boundaries are very often redrawn by politicians, which complicates looking at census data over time. I got my data from the Longitudinal Tract Data Base (http://www.s4.brown.edu/us2010/Researcher/Bridging.htm), a resource which provides census data estimates within 2010 tract boundaries for prior censuses (going back to 1970). To read about the interpolation method used by the team, click here: https://s4.ad.brown.edu/Projects/Diversity/Researcher/Logan%20etal_2014_PG.pdf.
 
-After getting access to the database, I filtered for Suffolk County, MA and removed census tracts that had populations of less than 500 people, since a lot of the fields were empty for those tracts. My final dataset had 191 census tracts and over 50 features, including racial, ethnic, income, housing, employment, and education information.
+After getting access to the files, I put the data into a Pandas dataframe and started exploring the data. I filtered for Suffolk County, MA and removed census tracts that had populations of less than 500 people, since a lot of the fields were empty for those tracts. My final dataset had 191 census tracts and over 50 features, including racial, ethnic, income, housing, employment, and education information.
 
 ## Clustering
 
@@ -41,14 +41,11 @@ Rather than strictly defining thresholds for what constitutes gentrification, I 
 - Non-White population
 - Owner-occupied housing
 
-
-Based on both the elbow curve and silhouette curve, in conjunction with my domain knowledge of Boston, I decided to apply k=4 to the k-means clustering algorithm. 
+The elbow curve and silhouette curve didn't highlight one "obvious" value for k. One could argue k=4 or k=6 seem appropriate (points where there are elbows in the elbow curve and peaks in the silhouette curve). Based on these results, in conjunction with my domain knowledge of Boston, I decided to apply k=4 to the k-means clustering algorithm. 
 
 <img align="left" src="Images/Elbow_curve.png" width="350"><img src="Images/Silhouette.png" width="350">
 
-The elbow curve shows the total within-cluster sum of squares (WSS) for every value of k. The WSS represents the intra-cluster variation, which is a value that should be minimized when clustering. Ideally, the elbow, or the point where adding another cluster doesn't materially decrease the WSS, would be obvious, but in this case you could argue k=4, k=6, or even k=7 make sense.
-
-One downfall of k-means clustering is that the clusters are very sensitive to the starting point of the centroids. In order to address this, I used an iterative approach to finding an optimal starting point for the centroids. After applying this to my data, the algorithm sorted 190 tracts into clusters 1-3, and only 1 tract into cluster 4. As a result, at this point in my analysis, I focused on clusters 1-3 to generalize my data, deciding that group 4 was an anomaly.
+One downfall of k-means clustering is that the clusters are very sensitive to the starting point of the centroids. In order to address this, I used an iterative approach to finding a more optimal starting point for the centroids. After applying this to my data, the algorithm sorted 190 tracts into clusters 1-3, and only 1 tract into cluster 4. As a result, at this point in my analysis, I focused on clusters 1-3 to generalize my data, deciding that group 4 was an anomaly.
 
 In order to interpret the clusters, I looked at the summary statistics of the features across the different groups, and relative to the county as a whole. More specifically, I compared the county average for each variable to the cluster average for each variable and then created my own labels for those clusters based on how those values differed:
 - **Gentrifying**: these are census tracts which saw larger increases in 5/6 variables when compared to the baseline (county average), with the one exception being percent change in Non-White population, for which a decline is typically associated with gentrification.  
@@ -70,7 +67,7 @@ I started by running a Dummy Classifier on my data as a baseline. This model def
 
 After parameter tuning with grid search, the following are the training and testing accuracy scores for all the models that were tested. Random Forest achieved the highest accuracy scores amongst the models, but is relatively overfit to the training data, especially compared to KNN. Given a long-term goal of using this model for other major metropolitan areas, I wanted to ensure my model would generalize well to unseen data. KNN may be a better model for this purpose, but ultimately if I want an accurate model for the Boston area, I'd choose Random Forest.
 
-| Model | Dummy  | KNN | Decision Tree | Random Forest | XGBoost |
+| | Dummy  | KNN | Decision Tree | Random Forest | XGBoost |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
 | Training Accuracy| 33% | 69% | 91% | 92% | 94% |
 | Testing Accuracy | 16% | 46% | 52% | 57% | 47% |
